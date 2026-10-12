@@ -1,0 +1,5 @@
+interface:
+  display_name: "Batch Commit"
+  short_description: "按功能分批提交改动"
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,4 @@
+interface:
+  display_name: "💰 Prune"
+  short_description: "减法式架构审查与重构：删除过时复杂度，直接实施并验证必要行为"
+  default_prompt: "使用 $prune 对当前项目执行减法式架构审查与重构，先显示 💰，再实施并验证证据充分的删减。"
