@@ -5,6 +5,8 @@ description: 实现、优化和审查 Flutter、Web 或原生界面，检查布�
 
 # UI
 
+> 来源：基于 [Tw93 / Waza 的 ui 技能](https://github.com/tw93/Waza/tree/main/skills/ui) 改编。保留 Tw93 的 [MIT 版权声明](LICENSE)。
+
 每次使用时，首条进度消息以 `🥷` 开头。仅要求审查时保持只读；已授权实现时完成修改与相应验证。沿用项目的组件、主题、样式和已有授权，不为界面打磨新增依赖或产品流程。
 
 ## 先确定界面依据

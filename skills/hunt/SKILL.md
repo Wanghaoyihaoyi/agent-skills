@@ -5,6 +5,8 @@ description: "Finds root cause before any fix. Use when something errors, crashe
 
 # Hunt: Diagnose Before You Fix
 
+> 来源：基于 [Tw93 / Waza 的 hunt 技能](https://github.com/tw93/Waza/tree/main/skills/hunt) 改编。保留 Tw93 的 [MIT 版权声明](LICENSE)。
+
 Prefix your first line with 🥷 inline, not as its own paragraph.
 
 A patch applied to a symptom creates a new bug somewhere else.

@@ -2,7 +2,7 @@
 
 在日常开发中维护的 17 个 AI 代理技能。覆盖需求梳理、问题排查、代码审查、架构精简、界面优化、研究和写作。
 
-这些技能采用 `SKILL.md` 目录格式，可用于 Codex、Claude Code 等支持 Agent Skills 的工具。部分技能基于公开项目改编或受到公开资料启发，来源见 [第三方声明](THIRD_PARTY_NOTICES.md)。本仓库收录个人维护的通用技能，不包含平台内置技能、同步的第三方技能包或私有项目专用技能。
+这些技能采用 `SKILL.md` 目录格式，可用于 Codex、Claude Code 等支持 Agent Skills 的工具。其中 9 项技能基于 [Tw93](https://github.com/tw93)（[Mole](https://github.com/tw93/Mole) 的作者）的 [Waza](https://github.com/tw93/Waza) 仓库改编；其他参考来源也保留署名，详见 [第三方声明](THIRD_PARTY_NOTICES.md)。本仓库收录个人维护的通用技能，不包含平台内置技能、同步的第三方技能包或私有项目专用技能。
 
 ## 技能目录
 
@@ -35,14 +35,29 @@ git clone https://github.com/Wanghaoyihaoyi/agent-skills.git
 cd agent-skills
 ```
 
-按需要安装单个技能，复制整个技能目录，保留其 `scripts/`、`references/` 和 `agents/` 文件。不要只复制 `SKILL.md`。
+推荐让安装目录链接到仓库中的技能目录。链接指向同一份文件，修改安装目录或仓库目录都会更新当前技能；不需要维护第二份副本。
 
 | 工具 | 用户级目录 | 项目级目录 |
 | --- | --- | --- |
 | Codex | `~/.agents/skills/` | `<项目>/.agents/skills/` |
 | Claude Code | `~/.claude/skills/` | `<项目>/.claude/skills/` |
 
-例如，将 `skills/hunt/` 复制到 `~/.agents/skills/hunt/`。目标目录已存在时，先比较差异，再决定更新，避免覆盖自己的版本。Codex 的目录发现和调用方式见 [官方技能文档](https://learn.chatgpt.com/docs/build-skills)；Claude Code 见 [官方技能文档](https://code.claude.com/docs/en/skills)。
+在仓库根目录中执行以下示例，安装 `hunt`：
+
+```bash
+for skill_dir in "$HOME/.agents/skills" "$HOME/.claude/skills"; do
+  mkdir -p "$skill_dir"
+  if [ -e "$skill_dir/hunt" ] || [ -L "$skill_dir/hunt" ]; then
+    printf '已存在，请先比较差异：%s\n' "$skill_dir/hunt" >&2
+  else
+    ln -s "$PWD/skills/hunt" "$skill_dir/hunt"
+  fi
+done
+```
+
+目标目录已经存在时，命令会拒绝覆盖。迁移旧安装时，先比较全部文件并合并自己的改动，再把一致的旧目录替换成链接。其他技能同样按名称建立链接。保留仓库目录的位置；移动仓库后需要更新链接。
+
+目录链接适用于 macOS/Linux。也可以复制完整技能目录（包含脚本、参考资料和许可证），但复制安装需要手动同步。Codex 的目录发现和调用方式见 [官方技能文档](https://learn.chatgpt.com/docs/build-skills)；Claude Code 见 [官方技能文档](https://code.claude.com/docs/en/skills)。
 
 `goal-prompt` 会按任务读取同级的 `think`、`hunt`、`ui`、`patch-audit`、`code-review`、`check` 和 `test-audit`。使用完整开发流程时，建议同时安装这些技能。其他技能按各自说明按需使用；缺少可选工具或技能时，应明确说明验证限制。
 
@@ -68,6 +83,22 @@ $write 把这段说明改得清楚、直接，保留事实和原意。
 - `read` 的网页提取脚本有标准库路径；`readability-lxml` 和 `html2text` 可提升提取质量。飞书 API 脚本需要 `requests` 和使用者自己的授权凭据。微信浏览器脚本需要 Playwright、BeautifulSoup、lxml 和浏览器运行环境。
 - `read` 默认直接读取来源网站。使用 `--use-proxy` 时会把 URL 发给第三方提取服务，需按技能说明取得授权。
 - `health` 的 Windows 启动器需要 PowerShell、Git Bash 和 Python；其他工具按实际检查范围使用。
+
+## 只维护一份并推送更新
+
+日常修改 `skills/<技能名>/`，或从已链接的安装目录编辑。两者指向同一份文件，Git 会直接看到这些改动。当前目录中的第三方同步技能和平台内置技能独立维护，不放进这个仓库。
+
+改动前，在仓库里运行 `git pull --ff-only`。改完后先查看差异、运行检查，再只提交要公开的文件。例如更新 `hunt`：
+
+```bash
+git diff -- skills/hunt
+.venv/bin/python scripts/validate.py
+git add -- skills/hunt
+git commit -m "feat: 更新 hunt 技能"
+git push origin main
+```
+
+检查脚本的环境准备见下节。推送前核对公开内容，尤其是新增脚本、私有路径和凭据。技能在本机直接使用最新文件；GitHub 在推送后更新。
 
 ## 检查仓库
 

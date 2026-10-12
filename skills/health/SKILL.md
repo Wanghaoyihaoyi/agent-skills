@@ -5,6 +5,8 @@ description: "Audits agent config, instruction drift, hooks or MCP, and AI maint
 
 # Health: Agent-Assisted Engineering Health
 
+> 来源：基于 [Tw93 / Waza 的 health 技能](https://github.com/tw93/Waza/tree/main/skills/health) 改编。保留 Tw93 的 [MIT 版权声明](LICENSE)。
+
 Prefix your first line with 🥷 inline, not as its own paragraph.
 
 Audit the current project's agent setup and AI coding maintainability against this framework:

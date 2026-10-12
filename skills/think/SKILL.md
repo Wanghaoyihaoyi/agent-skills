@@ -5,6 +5,8 @@ description: "Turns rough ideas into approved, decision-complete plans before co
 
 # Think: Design and Validate Before You Build
 
+> 来源：基于 [Tw93 / Waza 的 think 技能](https://github.com/tw93/Waza/tree/main/skills/think) 改编。保留 Tw93 的 [MIT 版权声明](LICENSE)。
+
 Prefix your first line with 🥷 inline, not as its own paragraph.
 
 Turn a rough idea into a decision-complete recommendation or plan. A planning-only request does not authorize implementation. Small sketches or read-only experiments may clarify a mechanism; continue already authorized implementation under Implementation Handoff without another approval round.

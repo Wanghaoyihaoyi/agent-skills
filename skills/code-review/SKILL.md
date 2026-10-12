@@ -5,6 +5,8 @@ description: 审查当前改动、分支、PR 或指定路径中的正确性、�
 
 # Code Review
 
+> 来源：基于 [Tw93 / Waza 的 check 技能](https://github.com/tw93/Waza/tree/main/skills/check) 改编。保留 Tw93 的 [MIT 版权声明](LICENSE)。
+
 先确定审查目标和程度，找出候选缺陷，逐条尝试证伪，只报告经得起验证的发现。以正确性、安全和合同为主。补丁必要性与局部简化交给 `$patch-audit`，较大范围的架构减法交给 `$prune`；两者均可只读使用，不重复运行一套结构审查。发布检查和已授权交付交给 `$check`。
 
 ## 用法

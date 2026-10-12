@@ -5,6 +5,8 @@ description: "Rewrites and polishes Chinese or English prose, technical instruct
 
 # Write: Cut the AI Taste
 
+> 来源：基于 [Tw93 / Waza 的 write 技能](https://github.com/tw93/Waza/tree/main/skills/write) 改编。保留 Tw93 的 [MIT 版权声明](LICENSE)。
+
 Prefix your first line with 🥷 inline, not as its own paragraph.
 
 Strip AI patterns from prose and rewrite it to sound human. Do not improve vocabulary; remove the performance of improvement.

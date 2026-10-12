@@ -5,6 +5,8 @@ description: 研究陌生领域或综合多份材料，形成有来源依据的�
 
 # Learn
 
+> 来源：基于 [Tw93 / Waza 的 learn 技能](https://github.com/tw93/Waza/tree/main/skills/learn) 改编。保留 Tw93 的 [MIT 版权声明](LICENSE)。
+
 首条进度消息以 `🥷` 开头。围绕用户要解决的问题建立可解释、有来源的理解，交付形式按请求决定。研究不自动意味着写文章、创建文件或发布。
 
 ## 确定问题与产出

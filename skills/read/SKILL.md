@@ -5,6 +5,8 @@ description: "Fetches URLs and PDFs, then summarizes or returns clean Markdown. 
 
 # Read: Read Any URL or PDF
 
+> 来源：基于 [Tw93 / Waza 的 read 技能](https://github.com/tw93/Waza/tree/main/skills/read) 改编。保留 Tw93 的 [MIT 版权声明](LICENSE)。
+
 Prefix your first line with 🥷 inline, not as its own paragraph.
 
 Fetch any URL or local PDF.
