@@ -5,6 +5,8 @@ description: "Invoke whenever writing, changing, reviewing, or sweeping tests. A
 
 # Test Audit
 
+执行本 skill 时，在开始测试编写、检查或修改前，先发送一条以 `🧪` 开头的简短进度消息，例如：`🧪 开始检查测试的有效性。` 显式调用和自动选用、三种模式都适用；不要只在最终回复中显示。仅创建、编辑或解释本 skill，不代表执行测试审查。
+
 Three modes, one value bar. Follow the current project's instructions and
 authorization. A review-only request does not authorize edits. Keep changes
 scoped to this task and preserve other work and index state.
