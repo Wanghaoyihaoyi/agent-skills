@@ -14,21 +14,21 @@ A patch applied to a symptom creates a new bug somewhere else.
 ## Outcome Contract
 
 - Outcome: the root cause is identified before any fix is applied.
-- Done when: one sentence explains the cause, every observed symptom fits it, and the fix or handoff is verified against a reproducible check.
+- Done when: evidence explains the cause and affected symptoms, separate or unresolved symptoms are identified, and the repair or handoff has a meaningful verification check.
 - Evidence: source trace, repro command or UI path, logs or state, targeted test/build output, and runtime evidence for UI or native defects.
 - Output: root cause, fix or handoff, verification result, and any unswept sibling risks.
-- Authorization: "diagnose", "investigate", "why", "look into", "排查", "看看", or equivalent is report-only. Apply a fix only when the current request explicitly asks to fix, change, implement, or optimize, or when an authorization to do so is still in force for this same unfinished task with the action, scope, and goal unchanged; root-cause proof is still required first. A fix authorization never carries commit, push, publish, or any destructive action with it.
+- Authorization: "diagnose", "investigate", "why", "look into", "排查", "看看", or equivalent is report-only. Apply a fix only when the current request explicitly asks to fix, change, implement, or optimize, or when an authorization to do so is still in force for this same unfinished task with the action, scope, and goal unchanged; root-cause proof is still required first. Commit, push, publish and destructive actions follow the current task and project authorization separately; honor existing authorization without asking again.
 
-**Do not touch code until you can state the root cause in one sentence:**
+**Before changing product behavior, state the cause and supporting evidence:**
 > "I believe the root cause is [X] because [evidence]."
 
-Name a specific file, function, line, or condition. "A state management issue" is not testable. "Stale cache in `useUser` at `src/hooks/user.ts:42` because the dependency array is missing `userId`" is testable. If you cannot be that specific, you do not have a hypothesis yet.
+Name a specific file, function, line, or condition. "A state management issue" is not testable. "Stale cache in `useUser` at `src/hooks/user.ts:42` because the dependency array is missing `userId`" is testable. If the cause is not specific enough to test, gather more evidence first. Minimal diagnostics may be added within authorization to discriminate hypotheses; they are not a behavioral fix.
 
 ## Diagnosis Signals
 
-Hypothesis quality gate: the hypothesis must explain every observable symptom, not just the one reported first; partial coverage is a symptom-level guess, not a root cause. A symptom the reporter waves off as unrelated is still a symptom the hypothesis has to cover. For timing-dependent issues (flicker, intermittent failure, race), reproduce reliably before diagnosing.
+Account for each reported symptom with evidence, including evidence that it has a separate cause; do not force unrelated failures into one hypothesis. For intermittent or timing-dependent issues, use logs, controlled ordering, replay or reproduction to discriminate causes. Failure to reproduce once is not proof of absence, and deterministic reproduction is not the only possible evidence.
 
-Rationalization smells: "I'll just try this" = no hypothesis, write it first. "I'm confident" = run the instrument that proves it. "Probably the same issue" = re-read the execution path from scratch. "It works on my machine" = enumerate env differences before dismissing. "One more restart" = read the last error verbatim; never restart more than twice without new evidence.
+Rationalization smells: "I'll just try this" = no hypothesis, write it first. "I'm confident" = run the instrument that proves it. "Probably the same issue" = re-read the execution path from scratch. "It works on my machine" = enumerate env differences before dismissing. "One more restart" = inspect the last error and current state; do not repeat restarts without new evidence or a concrete test.
 
 ## Durable Context Preflight
 
@@ -40,7 +40,7 @@ For `/hunt`: durable context is hypothesis fuel only, and current code, logs, an
 
 Activate when: "以前是好的", "之前是好的", "used to work", "上一次提交还是对的", "broke after update", or the user remembers a specific good commit or version.
 
-- Protect the user's worktree first: `git status --short --branch -uall`. Any modified, staged, or untracked files mean no bisect in the current checkout: run it in a temporary detached worktree and remove that worktree when done. If a temporary worktree is impossible, stop and ask for explicit cleanup/stash approval.
+- Protect the user's worktree first: `git status --short --branch -uall`. Any modified, staged, or untracked files mean no bisect in the current checkout: run it in a temporary detached worktree and remove that worktree when done. If a temporary worktree is impossible, continue read-only comparison or use an isolated copy; ask only if a necessary state-changing alternative lacks authorization.
 - If the last-good version is only a few releases back, `git diff <last-good>..HEAD -- <suspect path>` and read the delta first. The regression is usually visible there at a fraction of a bisect's cost; fall through to bisect only when the diff is too large or the culprit is not obvious.
 - Bisect only with a non-interactive pass/fail command defined up front, and keep the bookkeeping in git (`git bisect good/bad`), including when you test a suspect commit directly. When it names the culprit, read only that diff down to the specific line, then run `git bisect reset` before removing the temporary worktree.
 
@@ -62,7 +62,7 @@ If the issue is purely subjective UI taste, route to `/ui`. If it is rendering, 
 
 Activate after fixing a root-cause pattern, before declaring the bug done; also when the user says "举一反三", "举一反三深入看看", or "其他地方有没有同样问题". The same shape often hides in N other places; one local fix that ignores the blast leaves N - 1 bugs in the tree.
 
-Extract the pattern signature (the specific function, regex, API call, CSS selector, lock acquisition, validation skip, or input boundary that produced the bug) and search the affected call chains and sibling modules with available repository search tools, preferring `rg` and excluding generated dirs, build output, and vendored deps; for class-of-bug patterns ("any handler missing the lock"), grep the surrounding shape, not just the literal text. For every match, answer in writing: same bug / safe to leave (why) / unsure (ask the user). Do not silently skip a match, and do not claim "fixed" until the blast report is in the Output block. Unrelated bugs the sweep surfaces get listed, not fixed in this PR, unless the user agrees.
+Extract the pattern signature (the specific function, regex, API call, CSS selector, lock acquisition, validation skip, or input boundary that produced the bug) and search the affected call chains and sibling modules with available repository search tools, preferring `rg` and excluding generated dirs, build output, and vendored deps; for class-of-bug patterns ("any handler missing the lock"), grep the surrounding shape, not just the literal text. Classify relevant matches as same bug, safe with a reason, or unresolved evidence. Investigate factual unknowns yourself and ask only for a necessary decision or resource. Summarize the sibling scope and gaps before claiming the affected class is fixed; no per-match report template is required. Unrelated bugs the sweep surfaces get listed, not fixed in this PR, unless the user agrees.
 
 ## Confirm or Discard
 
@@ -108,11 +108,11 @@ For input method, character rendering, or text encoding bugs (IME state, cursor 
 
 - **Same symptom after a fix is a hard stop; so is "let me just try this."** Both mean the hypothesis is unfinished. Re-read the execution path from scratch before touching code again.
 - **Stop repeating attempts without new evidence.** Reassess disproven hypotheses and choose a discriminating probe. Continue authorized investigation when new evidence gives a concrete next step; hand off only when a missing resource, decision, permission or agreed budget blocks it. State what was checked, ruled out and still unknown rather than requiring approval after an arbitrary attempt count.
-- **External tool failure: diagnose before switching.** When an MCP tool or API fails, determine why first (server running? API key valid? Config correct?) before trying an alternative.
+- **External tool failure: inspect before retrying.** Check the error and actual terminal state; use an equivalent authorized alternative when it can obtain the needed evidence safely. Do not blindly retry, duplicate side effects or reset credentials.
 - **System/tooling symptoms need a lower-layer baseline.** Before blaming the visible app, generated file, or top-level feature, measure the raw lower layer first: OS capture versus post-processing, runtime service versus UI, compiler/toolchain versus test assertion, network/API versus client handling. Retire hypotheses that the baseline disproves instead of circling them.
 - **Visual/rendering bugs: static analysis first.** Trace paint layers, stacking contexts, and layer order in DevTools before adding console.log or visual debug overlays. Logs cannot capture what the compositor does. Only add instrumentation after static analysis fails.
-- **Behavioral / lifecycle / async bugs: instrument while forming the hypothesis.** Window lifecycle, event delivery, navigation, focus, timer, state-machine, and async-ordering bugs almost never yield to static reading alone. The moment the hypothesis involves "this callback fires before/after that one", "this state should be X when Y runs", or "this object should still be alive here", add the log before writing any fix; two guesses in a row is the hard-stop signal. Compositor behavior needs DevTools, not logs; pure-logic bugs (wrong formula, off-by-one) need only static analysis.
-- **Tuning magic numbers past round three: stop, unify.** When a spacing / sizing / threshold value has been adjusted three times and still looks wrong, the bug is structural, not numeric. Replace the N independent values with one named token (`Spacing.s4`, `--gap-content`, etc.) and verify the asymmetry was hiding a missing constraint. Asymmetry that survives tuning is structural; more tuning will not converge.
+- **Behavioral / lifecycle / async bugs need ordering evidence.** Reuse logs, traces, tests or a controlled reproduction. Add minimal diagnostics only when they are missing; static code can prove some pure-logic or ownership failures, but cannot prove unobserved runtime order. Do not add logs mechanically or fix from guesses.
+- **Repeated numeric tuning needs a structural check.** Inspect constraints, units and ownership before changing another constant. Share a token only when values represent the same rule; do not force legitimate asymmetry into one value or infer a cause from an attempt count.
 - **Performance complaints need numbers.** For "slow", "laggy", or memory-growth reports outside Native App Freeze Mode, measure the baseline first (wall-clock time, profile sample, memory footprint), fix, then re-measure and report before/after numbers. "Feels faster" is not evidence.
 - **Fix the cause within the authorized scope.** Continue necessary fixes, including a prerequisite refactor such as a shared interface change once you state why it is needed; ask only when the fix expands that scope or needs an unresolved behavior tradeoff, and file count alone is not an approval boundary. Keep unrelated refactors separate, and route an explicitly requested feature to its own workflow under the same completion ledger after diagnosis; a bug-fix authorization alone does not authorize an unrequested feature.
 
@@ -134,27 +134,8 @@ For input method, character rendering, or text encoding bugs (IME state, cursor 
 
 ## Output
 
-### Success Format
+Lead with outcome and delivery state, then briefly explain the cause, actual repair, affected sibling scope, evidence and unverified limits. Use project-specific format only when required; a small diagnosis does not need a fixed report block.
 
-Open the wrap-up with one plain line stating the outcome and whether the changes are committed; the block below supports that line, it does not replace it.
+For recurring bugs, retain a meaningful automated regression at the real boundary when feasible, following `test-audit`'s value and red-green rules. If automation cannot exercise the failure, explain why and retain a reproducible diagnostic or concrete device acceptance check; do not claim automated regression proof. Verify that negative assertions and the runner can actually detect the intended failure, using a discriminating control when needed, not a mandatory duplicate positive case for every assertion.
 
-```
-Root cause:        [what was wrong, file:line]
-Fix:               [what changed, file:line]
-Sibling sweep:     [N same-shape sites checked, N fixed / none found / not run, why]
-Confirmed:         [evidence or test that proves the fix]
-Tests:             [pass/fail count, regression test location]
-Regression guard:  [test file:line] or [none, reason]
-```
-
-Status: **resolved**, **resolved with caveats** (state them), or **blocked** (state what is unknown).
-
-**Regression guard rule**: for any bug that recurred or was previously "fixed", the fix is not done until:
-1. A regression test exists that fails on the unfixed code and passes on the fixed code.
-2. The test lives in the project's test suite, not a temporary file.
-3. The commit message states why the bug recurred and why this fix prevents it.
-4. Red-green was **run**, not assumed: run the new test against the unfixed code in an isolated temporary checkout or fixture, then against the fix. Do not revert or stash the shared worktree for this comparison. A regression test that has only ever been observed passing pins nothing. State the red run in the output. Two shapes make this fail silently: a framework or syntax where a failing assertion mid-test does not fail the test, so only the last one gates (in shell suites this can hinge on the bracket form alone, with one keyword swallowed and the other caught, so confirm which by running a two-line minimal repro rather than reasoning about it); and an assertion that the wrong string is absent, which passes forever because that string was never emitted under any code version. Any negative assertion ("output must not contain X") also needs a paired positive case in the same test proving the assertion can fail at all.
-
-### Handoff Format (after 3 failed hypotheses)
-
-Status **blocked**, then: the symptom in one sentence; each hypothesis with its test method and why it was ruled out; evidence collected (log or stack excerpts, repro steps, versions, config, runtime); what is still unknown or missing; and next steps, naming any tool, permission, or context the user must supply.
+Stop blind fixing and continue evidence gathering when a hypothesis fails. Hand off only when a concrete resource, decision, authorization or agreed budget blocks progress, not after a fixed number of attempts. State what was ruled out, what remains unknown and the next useful action; independent authorized work continues.

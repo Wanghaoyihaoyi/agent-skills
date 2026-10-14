@@ -34,16 +34,17 @@ add it yet:
 4. Does it need a production seam (export, flag, wrapper, injection hook) that no
    production caller needs? If yes, move the test to the real boundary instead.
 
-Then check the test against every [junk pattern](#junk-patterns); a match fails
-the gate unless the [retention bar](#retention-bar) names the contract it
-independently guards. A test that would break under behavior-preserving
-refactoring is asserting implementation, not behavior; rewrite it at the
-owning boundary before landing it.
+Use the relevant [junk patterns](#junk-patterns) to challenge the test; keep it
+when the [retention bar](#retention-bar) names an independent contract. A test
+that breaks under behavior-preserving refactoring is suspect, not automatically
+invalid: public names, bytes, packaging and architecture may be the contract.
+Otherwise move assertions to observable behavior at the owning boundary.
 
-Bug regression tests must fail on the pre-fix code for the intended reason and
-pass after the owner-boundary repair. A regression test that never demonstrably
-failed proves the mock, not the fix. One regression at the owner boundary
-covers the bug; do not replay the same scenario at every layer it crosses.
+For reproducible bugs, observe the regression failing for the intended reason
+on the pre-fix code in isolation and passing after repair. If the old failure
+cannot be run, name the missing evidence; a passing test alone does not prove
+the original bug was reproduced. Add cases for distinct risks, not duplicate
+replays of the same contract at every layer.
 
 ## 按风险选择验证方法
 
@@ -97,17 +98,19 @@ matches one, and audits hunt for existing tests that do.
 Tests justify their maintenance cost by protecting behavior, a credible
 regression, or an independently meaningful contract. In an audit, an existing
 test that must change for behavior-preserving source reorganization is suspect,
-not automatically deletable; the authoring gate still rejects new ones.
+not automatically deletable. New tests use the same independent-contract bar;
+reject implementation coupling, not a meaningful public-contract assertion.
 
-Before judging a candidate, read the complete test and production owner, its
-entry point, callers, callees, sibling implementations, overlapping tests, CI
-routing, and relevant history. Read root and scoped `AGENTS.md` files first.
-When the test claims dependency-backed behavior, inspect the dependency source
-or types directly.
+Read applicable project rules, the complete candidate test and its production
+owner. Follow callers, sibling coverage, CI and history as needed to establish
+the real contract and remaining proof; a small test edit does not require a
+whole-system inventory. Check dependency source or types when they decide the
+behavior being asserted.
 
 ## Discovery
 
-Keep discovery read-only and report evidence before editing. For broad scope,
+Keep discovery read-only until the candidate is understood; a brief finding is
+enough and does not create another approval gate for authorized edits. For broad scope,
 group discovery along these boundaries; delegate only when the user or
 applicable project instructions authorize it:
 
@@ -138,14 +141,14 @@ may still be the independent contract; prove otherwise before removing it.
 
 ## Candidate evidence
 
-Record every field below before editing. A missing field means the candidate is
-not ready for deletion:
+Before deletion, establish the following applicable evidence; a short local
+note is sufficient. Missing behavior or remaining-proof evidence blocks deletion:
 
 - exact test name and location;
 - what failure it can actually detect;
 - non-test callers of the covered production or support seam;
 - stronger remaining owner-boundary proof, or why no proof is needed;
-- relevant history and the reason the test or seam exists;
+- the reason the test or seam exists, using history where needed;
 - production or test-support deletion unlocked;
 - risk and the focused validation command.
 
@@ -156,9 +159,9 @@ globals, wrappers, and dead production paths instead of preserving aliases.
 Move retained regressions to their canonical owners. Consolidate repeated
 package or dependency assertions into one generic contract.
 
-Prefer net-negative production LOC. Do not add replacement tests that restate
-the same implementation, and do not convert uncertain candidates into cleanup
-to increase deletion counts.
+Reduce unnecessary production seams while preserving behavior; line counts are
+not a target. Do not replace deleted tests with implementation restatements or
+delete uncertain candidates to increase cleanup counts.
 
 ## Validation
 
@@ -189,12 +192,7 @@ refresh its actual base branch and changed files before the next batch.
 
 ## Handoff
 
-Report:
-
-- root cause and removed low-value categories;
-- production owner simplifications;
-- retained false positives and why they remain valuable;
-- focused and full proof actually run;
-- production versus test LOC;
-- PR and merge state;
-- named follow-ups.
+Report the actual change or review outcome, protected behavior, evidence and
+remaining limits. Include removed low-value categories, retained candidates,
+production simplifications and delivery state when applicable; authoring one
+test does not require a cleanup report, LOC comparison or PR template.

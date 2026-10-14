@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | `skills/think/` | [Tw93 / Waza · think](https://github.com/tw93/Waza/tree/main/skills/think) | 方案判断、规划流程及参考资料的改编 |
 | `skills/check/` | [Tw93 / Waza · check](https://github.com/tw93/Waza/tree/main/skills/check) | 发布与交付流程、发布面检查及 `release_gate.py` 的改编与复用 |
-| `skills/code-review/` | [Tw93 / Waza · check](https://github.com/tw93/Waza/tree/main/skills/check) | 从上游审查流程拆分；复用 `audit_signals.py`，改编审查资料 |
+| `skills/code-review/` | [Tw93 / Waza · check](https://github.com/tw93/Waza/tree/main/skills/check) | 当前通用版本复用 `audit_signals.py` 并改编审查资料；与 Claude Code 官方同名插件命令分别维护，此项说明这些文件的来源 |
 | `skills/hunt/` | [Tw93 / Waza · hunt](https://github.com/tw93/Waza/tree/main/skills/hunt) | 故障排查流程和参考资料的改编与复用 |
 | `skills/health/` | [Tw93 / Waza · health](https://github.com/tw93/Waza/tree/main/skills/health) | 代理配置检查、采集脚本、检查脚本和参考资料的改编与复用 |
 | `skills/read/` | [Tw93 / Waza · read](https://github.com/tw93/Waza/tree/main/skills/read) | 内容读取流程与抓取脚本的改编与复用；同时保留其对乔木项目的致谢 |
