@@ -1,6 +1,6 @@
 ---
 name: hunt
-description: "Finds root cause before any fix. Use when something errors, crashes, regresses, or used to work. Not for code review or new features."
+description: "Finds root cause before any fix. Use when something errors, crashes, regresses, or used to work. 也用于关键路径、尾延迟、排队积压及跨服务卡点的证据诊断。不用于代码审查或新功能设计。"
 ---
 
 # Hunt: Diagnose Before You Fix
@@ -87,6 +87,10 @@ For recurring classes of failures, load `references/failure-patterns.md` before 
 ## Native App Freeze Mode
 
 For beachballs, not responding, tab-switch freezes, first-open lag, idle wake stalls, overlay lockups, or frozen-app screenshots, load `references/logging-techniques.md` (Native App Freeze Mode) before changing code.
+
+## 性能与跨服务诊断
+
+遇到慢、延迟波动、排队积压、调用成本过高，或无法确定多服务链路卡点时，读取 [关键路径与可观测性](references/performance-diagnosis.md)。先测真实用户结果，再定位；不把先回复“处理中”当任务更快完成，也不凭单段耗时归咎模型。
 
 ## Targeted Logging
 

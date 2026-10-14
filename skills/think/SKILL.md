@@ -1,6 +1,6 @@
 ---
 name: think
-description: "Turns rough ideas into approved, decision-complete plans before coding. Use when planning architecture, judging whether to build, or writing a handoff. Not for bug fixes or small edits."
+description: "Turns rough ideas into approved, decision-complete plans before coding. Use when planning architecture, judging whether to build, or writing a handoff. 也用于第一性原理推导、并发与 Agent 架构设计、产品实验和多目标取舍。不用于缺陷排查或小修改。"
 ---
 
 # Think: Design and Validate Before You Build
@@ -41,6 +41,12 @@ For value, viability, commercialization, or keep/remove judgments about a single
 ## Triage Mode
 
 For a bundle of independently accepted or rejected asks or screenshots, including "are these worth doing", load `references/mode-triage.md`; use its per-item table rather than Evaluation Mode's single verdict.
+
+## 按问题选择工程视角
+
+用户要求第一性原理推导，或方案涉及职责拆分、异步与实时链路、跨服务一致性、Agent 编排时，按需读取 [系统与 Agent 设计](references/system-design.md) 的相关章节。判断功能收益、比较多目标方案或设计 A/B 实验时，读取 [产品实验与取舍](references/product-experiments.md)。不是术语检查表，不因触及一个概念就运行全部方法或预建框架。
+
+先给当前证据，再说明结论、取舍和什么新证据会改变判断。分析、方案和实验设计本身不授权代码修改、真实流量实验或外部操作；已获授权的同任务实施继续按下文交接规则完成。
 
 ## Before Reading Any Code
 

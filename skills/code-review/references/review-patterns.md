@@ -14,6 +14,17 @@ When code branches on an error message or captured command output, probe what th
 
 Flag fixed `sleep`, `asyncAfter`, `setTimeout`, frame counts, or guessed timeouts that stand in for an observable completion signal. They vary across CPU speed, display refresh rate, and networks. Drive the next step from callbacks, navigation completion, frame changes, state flags, or wall-clock state as appropriate.
 
+## 并发、队列与可靠提交
+
+改动涉及后台工作、共享状态、重试、队列或事件提交时，检查实际所有者和产生副作用的路径，不凭使用了某个模式就判安全，也不因没用某个框架就判缺陷：
+
+- 任务结束、失败和取消是否有人接收？越过请求生命周期后谁负责资源与结果，旧结果能否污染替换后的用户或会话？
+- 乐观版本检查是否与写入原子结合？并发重试、同键不同请求、结果未知时，服务端幂等能否阻止重复业务效果？
+- 并发、等待队列和重试是否都有界？满载策略是否使任务静默丢失或一直显示处理中？
+- 数据提交与事件发送之间失败会不会丢事件，重投会不会重复副作用？Outbox 不免除消费去重，Saga 补偿失败不等于已回滚；检查最终恢复与用户状态。
+
+按相关风险构造发生顺序和失败位置，再寻找已有保护证伪；性能结论须含排队及端到端结果。不要把这份清单变成所有 diff 都需要的架构改造。
+
 ## Simplification and deletion
 
 For prose, rule, skill, or guidance consolidation, read the deletions back and classify every removed behavior as `folded into X`, `redundant with Y`, or `behavior removed`. List behavior-removed entries explicitly. Deletion volume is not evidence of a good pass.

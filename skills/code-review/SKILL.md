@@ -71,7 +71,7 @@ $code-review [程度] [目标] [--fix] [--comment]
 
 ## 按需深入
 
-- 改动涉及异步完成、文件替换、删除、依赖或合同边界时，按相关章节读取 [专项检查](references/review-patterns.md)。
+- 改动涉及异步完成、后台任务、重试、队列、事件提交、文件替换、删除、依赖或合同边界时，按相关章节读取 [专项检查](references/review-patterns.md)。
 - 用户明确要求全项目质量评估或评分时，使用 [项目评估](references/mode-audit.md)；普通 diff 不运行全仓扫描。
 - 需要独立模型挑战方案时，按用户要求或项目规则使用 `adversarial-review`，不按文件数量自动启动多轮代理。
 - CLI、插件或安装包的交付验证由 [check 的产物检查](../check/references/release-surfaces.md) 补充，检查程度与本次实际改变的安装或发布路径匹配。

@@ -23,6 +23,16 @@
 | `skills/ui/references/design-reference.md` | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | 部分检查来源；保留 [MIT 许可证](licenses/Leonxlnx-taste-skill-LICENSE.txt) |
 | `skills/write/references/write-technical.md` | [danyuchn/asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) | 原说明标注为参考部分清晰表达原则的独立改写；保留 [MIT 许可证](licenses/danyuchn-asd-ste100-skill-LICENSE.txt) |
 
+## 工程方法参考
+
+2026-10-14 新增的以下内容为独立整理，以公开技术资料核对机制；未复制来源教程、代码或图像，不因此改变上述改编技能的署名与许可证。
+
+| 本仓库位置 | 核对来源 | 用途 |
+| --- | --- | --- |
+| `skills/think/references/system-design.md` | [Kotlin 协程文档](https://kotlinlang.org/docs/coroutines-basics.html)、[AWS 事务发件箱](https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html) | 结构化并发的生命周期、事务与重复事件边界 |
+| `skills/think/references/product-experiments.md` | [Microsoft Research 在线实验](https://www.microsoft.com/en-us/research/publication/online-experimentation-at-microsoft/)、[随机单位与租户实验](https://www.microsoft.com/en-us/research/articles/why-tenant-randomized-a-b-test-is-challenging-and-tenant-pairing-may-not-work/) | 随机化与因果证据、组间干扰和实验限制 |
+| `skills/hunt/references/performance-diagnosis.md` | [OpenTelemetry Traces](https://opentelemetry.io/docs/concepts/signals/traces/)、[Google SRE 服务目标](https://sre.google/sre-book/service-level-objectives/)、[错误预算策略](https://sre.google/workbook/error-budget-policy/) | 链路关联、服务质量指标、目标与错误预算 |
+
 ## Tw93 / Waza
 
 特别感谢 [Tw93](https://github.com/tw93)，也是 [Mole](https://github.com/tw93/Mole) 的作者。本仓库上表中的 9 项技能参考或改编自他的 [Waza](https://github.com/tw93/Waza)，并包含直接复用的脚本与资料。技能内容的直接来源按 Waza 署名，Mole 链接用于说明作者身份。本仓库是个人维护的改编版本。
