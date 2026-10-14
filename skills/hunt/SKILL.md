@@ -44,6 +44,12 @@ Activate when: "以前是好的", "之前是好的", "used to work", "上一次�
 - If the last-good version is only a few releases back, `git diff <last-good>..HEAD -- <suspect path>` and read the delta first. The regression is usually visible there at a fraction of a bisect's cost; fall through to bisect only when the diff is too large or the culprit is not obvious.
 - Bisect only with a non-interactive pass/fail command defined up front, and keep the bookkeeping in git (`git bisect good/bad`), including when you test a suspect commit directly. When it names the culprit, read only that diff down to the specific line, then run `git bisect reset` before removing the temporary worktree.
 
+## 最小化失败场景（Delta Debugging）
+
+输入、配置或事件序列太复杂，难以判断原因时，先定义可复验的失败判据，再在隔离副本中逐步去掉输入片段、事件或条件；每一步都确认仍是同一种失败，而非语法错误、其他拒绝或未到达原路径。保留必要前置状态和能触发失败的样例，不修改共享工作区来试错。
+
+间歇故障需固定可控时序、随机种子或记录重放，并说明重复运行的结果；无法可靠区分通过与失败时，先补观测，不从一次未复现推断某条件无用。缩减结果用于发现致因条件，不直接证明根因，也不要求证明全局最小；修复后仍回到原始完整场景验证。
+
 ## Repeated Regression / Screenshot Reference Mode
 
 Activate when the user says the same issue is still wrong after a fix, provides a "good" screenshot/version/file, or describes a visual result as previously correct.
