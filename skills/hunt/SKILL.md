@@ -1,6 +1,6 @@
 ---
 name: hunt
-description: "Finds root cause before any fix. Use when something errors, crashes, regresses, or used to work. 也用于关键路径、尾延迟、排队积压及跨服务卡点的证据诊断。不用于代码审查或新功能设计。"
+description: "Finds root cause before any fix. Use when something errors, crashes, regresses, or used to work. 也用于关键路径、尾延迟、排队积压、跨服务卡点、CI 负载优化和偶发失败的证据诊断。不用于代码审查或新功能设计。"
 ---
 
 # Hunt: Diagnose Before You Fix
@@ -91,6 +91,10 @@ For beachballs, not responding, tab-switch freezes, first-open lag, idle wake st
 ## 性能与跨服务诊断
 
 遇到慢、延迟波动、排队积压、调用成本过高，或无法确定多服务链路卡点时，读取 [关键路径与可观测性](references/performance-diagnosis.md)。先测真实用户结果，再定位；不把先回复“处理中”当任务更快完成，也不凭单段耗时归咎模型。
+
+## CI 负载与偶发失败
+
+用户要求减少 CI 时间或成本、排查不稳定测试时，读取 [CI 历史、收益与稳定性](references/ci-maintenance.md)。按历史运行记录量化收益，区分机器运行时间和合并等待时间；偶发失败先按证据分类，再修复明确原因。建议或审计请求保持只读，修复与交付沿用当前授权。
 
 ## Targeted Logging
 

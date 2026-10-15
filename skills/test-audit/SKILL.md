@@ -67,6 +67,10 @@ replays of the same contract at every layer.
 
 真实服务、共享资源和流量上的注入或压测须有适用授权；测试授权不自动包含这些操作。停止注入后确认环境恢复，保留能解释失败的种子和事件记录。未执行恢复检查就报告未验证，不由一次恢复宣称系统能承受所有故障。
 
+## CI 稳定性与运行成本
+
+CI 偶发失败和耗时排查由 [hunt 的 CI 指引](../hunt/references/ci-maintenance.md) 承接运行历史、根因与收益分析；本 skill 负责检查修复后的测试是否仍保护真实行为。慢或偶发失败都不是删除测试的依据，不把重跑变绿当成修复；只有已证明无效或被更强证明替代的测试才进入删除审查。
+
 ## Junk patterns
 
 The shared checklist for both modes: the authoring gate rejects a new test that

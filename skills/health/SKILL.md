@@ -1,6 +1,6 @@
 ---
 name: health
-description: "Audits agent config, instruction drift, hooks or MCP, and AI maintainability. Use when Claude, Codex, or Pi setup looks wrong. Not for application bugs or PR review."
+description: "Audits agent config, instruction drift, hooks or MCP, and AI maintainability. Use when Claude, Codex, or Pi setup looks wrong, or to evaluate a misleading AGENTS.md instruction with a controlled replay. Not for application bugs or PR review."
 ---
 
 # Health: Agent-Assisted Engineering Health
@@ -8,6 +8,8 @@ description: "Audits agent config, instruction drift, hooks or MCP, and AI maint
 > 来源：基于 [Tw93 / Waza 的 health 技能](https://github.com/tw93/Waza/tree/main/skills/health) 改编。保留 Tw93 的 [MIT 版权声明](LICENSE)。
 
 Prefix your first line with 🥷 inline, not as its own paragraph.
+
+任务仅针对一条指令的效果时，直接进入下文“单条指令的对照重放”，只采集该实验需要的会话与配置，不先运行完整健康审计。
 
 Audit the current project's agent setup and AI coding maintainability against this framework:
 `agent config → instruction surfaces → tools/runtime → verifiers → maintainability`
@@ -131,6 +133,10 @@ Analyze locally from the summary output by default. When Budget posture escalate
 - **Fallback:** If a subagent fails, analyze that layer locally and note "(analyzed locally)".
 
 Before reporting a deep audit as complete, wait for every launched inspector and reconcile its assigned scope. If one remains pending or fails without a local replacement pass, list that scope as unreviewed instead of issuing a whole-scope clean bill.
+
+## 单条指令的对照重放
+
+当近期会话表明某条 `AGENTS.md` 指令可能误导代理或造成无效工作时，读取 [指令对照重放](references/instruction-replay.md)。普通审计只给证据和实验方案；用户已要求实验时，在有效授权下隔离重放同一提示词、仓库快照和模型，只改变该条规则，对比任务质量、行为及成本。此模式独立于上述只读采集器，不因 health 审计自动启动；没有运行的对照不得称为效果验证。
 
 ## Gotchas
 

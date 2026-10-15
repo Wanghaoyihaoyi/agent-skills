@@ -33,6 +33,12 @@
 | `skills/think/references/product-experiments.md` | [Microsoft Research 在线实验](https://www.microsoft.com/en-us/research/publication/online-experimentation-at-microsoft/)、[随机单位与租户实验](https://www.microsoft.com/en-us/research/articles/why-tenant-randomized-a-b-test-is-challenging-and-tenant-pairing-may-not-work/) | 随机化与因果证据、组间干扰和实验限制 |
 | `skills/hunt/references/performance-diagnosis.md` | [OpenTelemetry Traces](https://opentelemetry.io/docs/concepts/signals/traces/)、[Google SRE 服务目标](https://sre.google/sre-book/service-level-objectives/)、[错误预算策略](https://sre.google/workbook/error-budget-policy/) | 链路关联、服务质量指标、目标与错误预算 |
 
+2026-10-15 新增的维护方法参考如下。内容为独立整理，未复制博客全文、原始提示词、代码或图像；保留既有技能的上游声明。
+
+| 本仓库位置 | 核对来源 | 用途 |
+| --- | --- | --- |
+| `skills/prune/references/retirement-evidence.md`、`skills/hunt/references/ci-maintenance.md`、`skills/health/references/instruction-replay.md` 及对应入口、`skills/test-audit/SKILL.md` | Rodrigo Roim / OpenAI，[Maintaining software with the GPT-6 family](https://developers.openai.com/blog/maintaining-software-with-the-gpt-6-family)（2026-10-14） | 跨来源删除证据、废弃开关与间接依赖审计、按历史量化 CI 收益、偶发失败修复及单条指令对照重放 |
+
 ## Tw93 / Waza
 
 特别感谢 [Tw93](https://github.com/tw93)，也是 [Mole](https://github.com/tw93/Mole) 的作者。本仓库上表中的 9 项技能参考或改编自他的 [Waza](https://github.com/tw93/Waza)，并包含直接复用的脚本与资料。技能内容的直接来源按 Waza 署名，Mole 链接用于说明作者身份。本仓库是个人维护的改编版本。
