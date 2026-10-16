@@ -1,6 +1,6 @@
 # Agent Skills
 
-在日常开发中维护的 17 个 AI 代理技能。覆盖需求梳理、问题排查、代码审查、架构精简、界面优化、研究和写作。
+在日常开发中维护的 18 个 AI 代理技能。覆盖需求梳理、问题排查、代码审查、架构精简、界面优化、研究和写作。
 
 这些技能采用 `SKILL.md` 目录格式，可用于 Codex、Claude Code 等支持 Agent Skills 的工具。其中 9 项技能基于 [Tw93](https://github.com/tw93)（[Mole](https://github.com/tw93/Mole) 的作者）的 [Waza](https://github.com/tw93/Waza) 仓库改编；其他参考来源也保留署名，详见 [第三方声明](THIRD_PARTY_NOTICES.md)。本仓库收录个人维护的通用技能，不包含平台内置技能、同步的第三方技能包或私有项目专用技能。
 
@@ -17,6 +17,7 @@
 | 开发与审查 | [patch-audit](skills/patch-audit/SKILL.md) | 提交前检查改动是否必要，清理冗余和场景补丁 |
 | 开发与审查 | [test-audit](skills/test-audit/SKILL.md) | 检查测试的实际价值和边界，审查低价值测试 |
 | 开发与审查 | [prune](skills/prune/SKILL.md) | 删除过时流程、冗余状态和无价值中间层 |
+| 交付与维护 | [kaneo-workflow](skills/kaneo-workflow/SKILL.md) | 开工检查待办，同步接手、交付和用户验收状态，补记独立工作 |
 | 交付与维护 | [batch-commit](skills/batch-commit/SKILL.md) | 将已授权改动按功能拆成清楚的提交 |
 | 交付与维护 | [check](skills/check/SKILL.md) | 检查发布准备度，完成已授权的交付和队列维护 |
 | 交付与维护 | [health](skills/health/SKILL.md) | 检查代理配置、指令漂移与可维护性，按需对照重放单条规则 |

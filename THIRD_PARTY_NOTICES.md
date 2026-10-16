@@ -39,6 +39,10 @@
 | --- | --- | --- |
 | `skills/prune/references/retirement-evidence.md`、`skills/hunt/references/ci-maintenance.md`、`skills/health/references/instruction-replay.md` 及对应入口、`skills/test-audit/SKILL.md` | Rodrigo Roim / OpenAI，[Maintaining software with the GPT-6 family](https://developers.openai.com/blog/maintaining-software-with-the-gpt-6-family)（2026-10-14） | 跨来源删除证据、废弃开关与间接依赖审计、按历史量化 CI 收益、偶发失败修复及单条指令对照重放 |
 
+## Kaneo 接口参考
+
+`skills/kaneo-workflow/SKILL.md` 的协作规则为独立编写，接口能力参考 [Kaneo 官方 MCP 说明](https://github.com/usekaneo/kaneo/tree/main/packages/mcp)。未打包 Kaneo 的源码、文档全文或凭据；目标实例能力需在连接时重新核对。
+
 ## Tw93 / Waza
 
 特别感谢 [Tw93](https://github.com/tw93)，也是 [Mole](https://github.com/tw93/Mole) 的作者。本仓库上表中的 9 项技能参考或改编自他的 [Waza](https://github.com/tw93/Waza)，并包含直接复用的脚本与资料。技能内容的直接来源按 Waza 署名，Mole 链接用于说明作者身份。本仓库是个人维护的改编版本。
