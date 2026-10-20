@@ -39,6 +39,10 @@
 | --- | --- | --- |
 | `skills/prune/references/retirement-evidence.md`、`skills/hunt/references/ci-maintenance.md`、`skills/health/references/instruction-replay.md` 及对应入口、`skills/test-audit/SKILL.md` | Rodrigo Roim / OpenAI，[Maintaining software with the GPT-6 family](https://developers.openai.com/blog/maintaining-software-with-the-gpt-6-family)（2026-10-14） | 跨来源删除证据、废弃开关与间接依赖审计、按历史量化 CI 收益、偶发失败修复及单条指令对照重放 |
 
+## Cursor 结构审查参考
+
+2026-10-20，`skills/patch-audit/SKILL.md` 选择性吸收 [Cursor / cursor-team-kit 的 Thermo-Nuclear Code Quality Review](https://github.com/cursor/plugins/blob/main/cursor-team-kit/skills/thermo-nuclear-code-quality-review/SKILL.md)：结构退化的举证要求、跨过 1000 行时的职责审查，以及通过状态与边界简化下游分支。内容已精简改写，`skills/code-review/SKILL.md` 仅增加承接与报告规则，不复制整套流程。保留 `Copyright (c) 2026 Cursor` 及 [MIT 许可证](skills/patch-audit/LICENSE)。
+
 ## Kaneo 接口参考
 
 `skills/kaneo-workflow/SKILL.md` 的协作规则为独立编写，接口能力参考 [Kaneo 官方 MCP 说明](https://github.com/usekaneo/kaneo/tree/main/packages/mcp)。未打包 Kaneo 的源码、文档全文或凭据；目标实例能力需在连接时重新核对。
