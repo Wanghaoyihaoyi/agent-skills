@@ -20,6 +20,42 @@ Checks:
 - Inspect queue rows or job state directly.
 - Add a regression test around the enqueue boundary, not only the worker body.
 
+## Running Build Is Not The Changed Build
+
+Signals: the fix passes locally, but the deployed service or installed app behaves exactly as before; the deploy job reports success while the container start time, image digest, or app version did not change; the deploy log mentions a full disk, a registry push error, or an unchanged config hash that skipped recreation.
+
+Checks:
+- Read the version identity from the running target itself (image digest and start time, served build id, installed app version or commit), not from the deploy job's status.
+- When identity does not match, diagnose the delivery path first: disk space, registry errors, skipped recreation, wrong install target. Do not re-diagnose code that has not run yet.
+
+## Session Reconnect Orphans State
+
+Signals: after a disconnect and reconnect, a pending reply, notice, or task never arrives, arrives minutes late, or lands in the wrong session; a clean first connection works; the delay matches a lease, TTL, or timeout constant.
+
+Checks:
+- List the per-session state (pending queues, leases, subscriptions, timers, playback) and name the owner that releases each one.
+- Trace what reconnect does with each item: transfer it to the new session, release it, or leave it orphaned until expiry.
+- Compare the observed delay with every lease and timeout constant on the path; a match points at an orphaned holder, not a slow worker.
+- Replay the disconnect at each phase: before claim, after claim but before delivery, and during delivery.
+
+## Claim Before Check
+
+Signals: an item is claimed, leased, or locked, then a precondition (quiet period, readiness, ownership) fails, and the item stays held until the lease expires; the symptom is a fixed delay rather than an error.
+
+Checks:
+- Check preconditions that can fail before taking the claim, or release the claim on every exit that does not deliver.
+- Enumerate every exit after the claim, including early returns, exceptions, and cancellation.
+- Assert in a test that a failed precondition leaves the item immediately claimable again.
+
+## Late Result After Cancel Or Handoff
+
+Signals: a result of a cancelled or superseded request takes effect in the new state: an old reply plays after an interruption, or the previous user's result appears for the next one.
+
+Checks:
+- Tag each request with its owner or generation when it starts, and compare it with the current owner when the result arrives.
+- Drop stale results before the first side effect (playback, display, persistence), not after it; filtering only the visible text leaves the side effect in place.
+- Cover a result that arrives after cancel, after handoff, and after reconnect.
+
 ## Generated Rebuild Boundary
 
 Signals: source changed but generated output, app bundle, CLI artifact, archive, checksum, or release package still contains old behavior.

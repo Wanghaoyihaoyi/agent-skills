@@ -30,11 +30,7 @@ Account for each reported symptom with evidence, including evidence that it has 
 
 Rationalization smells: "I'll just try this" = no hypothesis, write it first. "I'm confident" = run the instrument that proves it. "Probably the same issue" = re-read the execution path from scratch. "It works on my machine" = enumerate env differences before dismissing. "One more restart" = inspect the last error and current state; do not repeat restarts without new evidence or a concrete test.
 
-## Durable Context Preflight
-
-See [references/durable-context.md](references/durable-context.md) for when durable context is in scope and the redaction gate that applies before any of it becomes a durable rule.
-
-For `/hunt`: durable context is hypothesis fuel only, and current code, logs, and repro evidence override memory. It never replaces a fresh root-cause sentence or a reproducible symptom list.
+Memory and prior notes are hypothesis fuel only: current code, logs, and repro evidence override them, and they never replace a fresh root-cause sentence or symptom list.
 
 ## Bisect Mode
 
@@ -74,9 +70,10 @@ Use this ladder before claiming a bug is fixed:
 
 1. Source trace: name the exact function, state transition, file, line, or condition that can produce the symptom.
 2. Deterministic repro: run or write the smallest command, fixture, UI path, or scenario that produces it.
-3. Logs/state/cache: inspect the runtime state that proves the path was reached, including queues, DB rows, caches, temp files, generated outputs, or external tool logs.
-4. Build/test: run the narrow test or build that exercises the fix.
-5. Real runtime check: for UI, native app, browser, rendering, or visual bugs, open the app/page/artifact and verify the visible result with a screenshot or concrete checklist.
+3. Running version: before reading a deployed service's or device's behavior, read the version identity from the running target itself (container image digest and start time, served build id, installed app version or commit) and match it to the code under test. A deploy reported as done can still be running old code after a silent failure; until identity matches, every later rung measures the old build.
+4. Logs/state/cache: inspect the runtime state that proves the path was reached, including queues, DB rows, caches, temp files, generated outputs, device logs, or external tool logs. Capture them before a redeploy, reinstall, or restart replaces them.
+5. Build/test: run the narrow test or build that exercises the fix.
+6. Real runtime check: for UI, native app, browser, rendering, or visual bugs, open the app/page/artifact and verify the visible result with a screenshot or concrete checklist.
 
 Compile-only is not enough for UI, native-app, visual, rendering, or generated-artifact bugs. If the runtime check is impossible in the environment, say why and hand off the exact screen, command, or artifact to verify.
 
@@ -92,13 +89,19 @@ For beachballs, not responding, tab-switch freezes, first-open lag, idle wake st
 
 遇到慢、延迟波动、排队积压、调用成本过高，或无法确定多服务链路卡点时，读取 [关键路径与可观测性](references/performance-diagnosis.md)。先测真实用户结果，再定位；不把先回复“处理中”当任务更快完成，也不凭单段耗时归咎模型。
 
+## 跨端会话与时序
+
+故障跨客户端、网关、后端或外部服务，表现为事件先后错乱、断线重连后状态丢失、取消后迟到结果生效，或接口成功但用户体验不对时，先在这里定位：拿到事件先后、请求或会话标识和状态归属的证据，写出根因句。常见形态见 [故障模式](references/failure-patterns.md) 中的会话重连、先占后查和迟到结果条目。
+
+项目提供跨端行为技能（如 `cross-layer-behavior`）时，根因明确后，由它确定目标行为、必须阻止的副作用以及跨层修复和验收；沿用这里已有的证据和根因，不重新调查一遍。只涉及单层的小问题直接在这里修复。
+
 ## CI 负载与偶发失败
 
 用户要求减少 CI 时间或成本、排查不稳定测试时，读取 [CI 历史、收益与稳定性](references/ci-maintenance.md)。按历史运行记录量化收益，区分机器运行时间和合并等待时间；偶发失败先按证据分类，再修复明确原因。建议或审计请求保持只读，修复与交付沿用当前授权。
 
 ## Targeted Logging
 
-Every log is a yes/no question: "if this prints X before Y, hypothesis A survives; otherwise A is dead." A log that cannot rule a hypothesis in or out is noise. Remove temporary logs before finishing; gate persistent diagnostics behind the project's debug flag. If adding a log changes the behavior, that is itself evidence of a timing, lifecycle, or concurrency problem. Full playbook: `references/logging-techniques.md`.
+Each log must answer a yes/no question about a hypothesis; see `references/logging-techniques.md` for what to log and how to trace runner-only failures. Remove temporary logs before finishing; gate persistent diagnostics behind the project's debug flag.
 
 ## Rendering Bug Mode
 
@@ -141,5 +144,3 @@ For input method, character rendering, or text encoding bugs (IME state, cursor 
 Lead with outcome and delivery state, then briefly explain the cause, actual repair, affected sibling scope, evidence and unverified limits. Use project-specific format only when required; a small diagnosis does not need a fixed report block.
 
 For recurring bugs, retain a meaningful automated regression at the real boundary when feasible, following `test-audit`'s value and red-green rules. If automation cannot exercise the failure, explain why and retain a reproducible diagnostic or concrete device acceptance check; do not claim automated regression proof. Verify that negative assertions and the runner can actually detect the intended failure, using a discriminating control when needed, not a mandatory duplicate positive case for every assertion.
-
-Stop blind fixing and continue evidence gathering when a hypothesis fails. Hand off only when a concrete resource, decision, authorization or agreed budget blocks progress, not after a fixed number of attempts. State what was ruled out, what remains unknown and the next useful action; independent authorized work continues.
