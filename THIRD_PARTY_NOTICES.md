@@ -16,7 +16,7 @@
 | `skills/learn/` | [Tw93 / Waza · learn](https://github.com/tw93/Waza/tree/main/skills/learn) | 参考上游研究工作流，重新编写本地研究入口 |
 | `skills/ui/` | [Tw93 / Waza · ui](https://github.com/tw93/Waza/tree/main/skills/ui) | 界面工作流和设计参考资料的改编；保留其他设计来源 |
 | `skills/adversarial-review/` | [poteto/noodle](https://github.com/poteto/noodle) | 原说明标注为改编；保留 [MIT 许可证](licenses/poteto-noodle-LICENSE.txt) |
-| `skills/how/` | [poteto/how](https://github.com/poteto/how) | 原说明标注为改编；保留 [MIT 许可证](licenses/poteto-how-LICENSE.txt) |
+| 已移除的 `how` 技能（历史归属） | [poteto/how](https://github.com/poteto/how) | 原说明标注为改编；保留 [MIT 许可证](licenses/poteto-how-LICENSE.txt) |
 | `skills/read/scripts/fetch.sh`、`fetch_feishu.py`、`fetch_weixin.py` | [joeseesun/qiaomu-markdown-proxy](https://github.com/joeseesun/qiaomu-markdown-proxy) | 原脚本标注为受其实现思路启发；保留致谢及 [MIT 许可证](licenses/joeseesun-qiaomu-markdown-proxy-LICENSE.txt) |
 | `skills/ui/references/design-reference.md` | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | 部分检查来源；本地资料为整理与改写，保留 [Apache 2.0 许可证](licenses/pbakaus-impeccable-LICENSE.txt) 和 [上游声明](licenses/impeccable-NOTICE.md) |
 | `skills/ui/references/design-reference.md` | [getdesign.md](https://getdesign.md)、[VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md) | 设计资料来源；保留 [MIT 许可证](licenses/getdesign-LICENSE.txt) |

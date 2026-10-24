@@ -10,7 +10,6 @@
 | --- | --- | --- |
 | 需求与理解 | [goal-prompt](skills/goal-prompt/SKILL.md) | 把目标梳理成可执行任务，在已有授权下完成开发与交付 |
 | 需求与理解 | [think](skills/think/SKILL.md) | 在实施前明确方案、约束、取舍和验证方式 |
-| 需求与理解 | [how](skills/how/SKILL.md) | 读取真实代码，解释系统的结构和运行过程 |
 | 开发与审查 | [hunt](skills/hunt/SKILL.md) | 先查清故障根因，再修复并验证 |
 | 开发与审查 | [code-review](skills/code-review/SKILL.md) | 审查改动、分支或 PR 的缺陷，逐项核实后报告 |
 | 开发与审查 | [adversarial-review](skills/adversarial-review/SKILL.md) | 通过另一家模型的命令行工具进行交叉审查 |
@@ -68,7 +67,6 @@ done
 
 ```text
 $hunt 查清这个接口为什么偶尔返回错误，并修复根因。
-$how 解释用户点击提交后，数据经过哪些模块。
 $patch-audit 检查本次改动是否堆叠了不必要的补丁。
 $write 把这段说明改得清楚、直接，保留事实和原意。
 $prune 审计本仓库的死代码与废弃开关，核实间接引用和运行证据，清理已证明可退役的部分；不改线上配置。
