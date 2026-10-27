@@ -66,6 +66,8 @@ Run the one probe that would fail if the hypothesis were wrong, then read it. If
 
 ## Runtime Evidence Ladder
 
+修复验收沿用 [test-audit](../test-audit/SKILL.md) 的独立业务预期、验证边界与停止条件；复用已有检查，不因排查自动新增测试或清理整个测试面。优先通过真实入口捕获目标业务失败，修复后用同一案例与直接受影响的合法行为核对；无法核对旧实现时明确写“未验证修复前失败”。涉及异步结果、模型选择、语音或设备时，再读 [专项行为验收](../test-audit/references/behavior-acceptance.md) 的对应部分，区分受理、完成、存储、展示与实际播放。
+
 Use this ladder before claiming a bug is fixed:
 
 1. Source trace: name the exact function, state transition, file, line, or condition that can produce the symptom.

@@ -14,7 +14,7 @@
 | 开发与审查 | [code-review](skills/code-review/SKILL.md) | 审查改动、分支或 PR 的缺陷，逐项核实后报告 |
 | 开发与审查 | [adversarial-review](skills/adversarial-review/SKILL.md) | 通过另一家模型的命令行工具进行交叉审查 |
 | 开发与审查 | [patch-audit](skills/patch-audit/SKILL.md) | 提交前检查改动是否必要，清理冗余和场景补丁 |
-| 开发与审查 | [test-audit](skills/test-audit/SKILL.md) | 检查测试的实际价值和边界，审查低价值测试 |
+| 开发与审查 | [test-audit](skills/test-audit/SKILL.md) | 有效测试与行为验收，按风险补证据并审查低价值测试 |
 | 开发与审查 | [prune](skills/prune/SKILL.md) | 删除过时流程、冗余状态和无价值中间层 |
 | 交付与维护 | [kaneo-workflow](skills/kaneo-workflow/SKILL.md) | 开工检查待办，同步接手、交付和用户验收状态，补记独立工作 |
 | 交付与维护 | [batch-commit](skills/batch-commit/SKILL.md) | 将已授权改动按功能拆成清楚的提交 |
@@ -68,6 +68,7 @@ done
 ```text
 $hunt 查清这个接口为什么偶尔返回错误，并修复根因。
 $patch-audit 检查本次改动是否堆叠了不必要的补丁。
+$test-audit 按有效测试与行为验收规则处理本次改动，先明确业务预期，复用已有检查并说明验证边界。
 $write 把这段说明改得清楚、直接，保留事实和原意。
 $prune 审计本仓库的死代码与废弃开关，核实间接引用和运行证据，清理已证明可退役的部分；不改线上配置。
 $hunt 根据近期 CI 历史，按预计每日节省机器分钟排序优化建议，先只给表格。
@@ -90,7 +91,7 @@ $health 从近期会话找一条误导代理的 AGENTS.md 规则，在隔离环�
 | 已有故障 | `hunt` | 查清根因，在有效授权内修复和验证 |
 | 审查代码缺陷 | 本仓库 `code-review` | 默认只读；修复、对外评论分别按实际授权 |
 | 复审本轮复杂度 / 清理已有架构 | `patch-audit` / `prune` | 前者针对本轮改动，后者针对明确架构范围；复用同等检查证据 |
-| 编写或审查测试 / 交付收尾 | `test-audit` / `check` | 按风险和授权使用，均不自动开启全仓清理或发布 |
+| 编写或审查测试、修复回归与行为验收 / 交付收尾 | `test-audit` / `check` | 先明确独立预期与证据层级，达到停止条件就交付；不自动开启全仓清理或发布 |
 
 `think` 是设计能力，`goal-prompt` 是完整任务入口，不需要先手动运行一个再复制到另一个。用户已要求实施时不重新索取“开干”；仅方案讨论等待必要实施授权。提交前 `patch-audit` 的要求保留，但同一份已审查内容不重复运行。
 
