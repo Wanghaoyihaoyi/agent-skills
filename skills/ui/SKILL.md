@@ -21,10 +21,13 @@ description: 实现、优化和审查 Flutter、Web 或原生界面，检查布�
 - 新页面、响应式布局、主题或文字体系：[设计细节](references/design-reference.md)。
 - 原生界面的动效或按压反馈：[原生动效](references/design-native-motion.md)。
 - 数据看板、图表或密集数值：[数据展示](references/design-data-viz.md)。
+- 要求审查、打磨、抛光，或新表面定视觉方向：[评审与门禁](references/design-review-table.md)。小修复不读。
 
 独立生成或编辑位图使用 `imagegen`；手机网页的滚动、触控和安全区问题可使用 `mobile-native`。两者不是所有 UI 任务的前置步骤。
 
 评价时区分主观审美、可用性问题和实际性能问题。审美以用户认可的方向为依据，可用性说明哪个任务在哪一步受阻，性能给出测量；“更高级”“更现代”不作为完成标准。优先改直接影响理解、操作和结果的地方。
+
+项目如有 `docs/DESIGN-*.md`（如镜子端的 `DESIGN-mirror.md`），其中的令牌、禁令与拨盘姿态优先于通用默认值；缺失不阻塞任务。
 
 ## 布局与操作
 
