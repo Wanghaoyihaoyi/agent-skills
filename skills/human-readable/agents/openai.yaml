@@ -1,0 +1,4 @@
+interface:
+  display_name: "Human Readable"
+  short_description: "Make AI responses easier to understand"
+  default_prompt: "Use $human-readable to make this response easier to understand."

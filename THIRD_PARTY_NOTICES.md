@@ -56,3 +56,7 @@ Waza 的版权声明为 `Copyright (c) 2026 Tw93`，采用 [MIT 许可证](licen
 来源在 2026-10-12 与 [Waza 提交 `a6d28b0e18f6`](https://github.com/tw93/Waza/tree/a6d28b0e18f6c199c45d9b8d9e6012c040c22161) 核对；该提交用于文件与许可证比对，不表示所有文件最初取自这一版本。
 
 写作技能不包含 ASD-STE100 的完整标准或批准词典，也不声称满足该标准认证。需要正式采用标准时，查阅 [ASD-STE100 官方资料](https://www.asd-ste100.org/)。
+
+## 语言可理解性参考
+
+2026-10-28 新增。`skills/human-readable/SKILL.md` 为独立编写，未复制论文全文；语言复杂度诊断思路参考 [arXiv:2610.29162](https://arxiv.org/abs/2610.29162) 的心理语言学发现。
