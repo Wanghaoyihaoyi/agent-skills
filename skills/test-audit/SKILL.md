@@ -1,23 +1,43 @@
 ---
 name: test-audit
-description: "Invoke whenever writing, changing, reviewing, or sweeping tests. Authoring gate for new tests plus audit workflow for low-value, implementation-coupled, or duplicative tests and the test-only production seams they demand."
+description: "有效测试与行为验收。用于编写、修改、审查或清理测试，以及修复回归与业务行为验收；按风险判断是否新增测试，建立独立预期和可复核证据。低风险文案允许零新增测试，不自动扩成全仓治理。"
 ---
 
 # Test Audit
 
-执行本 skill 时，在开始测试编写、检查或修改前，先发送一条以 `🧪` 开头的简短进度消息，例如：`🧪 开始检查测试的有效性。` 显式调用和自动选用、三种模式都适用；不要只在最终回复中显示。仅创建、编辑或解释本 skill，不代表执行测试审查。
+执行本 skill 时，在开始测试或行为验收前，先发送一条以 `🧪` 开头的简短进度消息，例如：`🧪 开始核对业务预期与验证边界。` 显式调用和自动选用都适用；不要只在最终回复中显示。仅创建、编辑或解释本 skill，不代表执行测试审查。
 
-Three modes, one value bar. Follow the current project's instructions and
-authorization. A review-only request does not authorize edits. Keep changes
-scoped to this task and preserve other work and index state.
+目标是用与风险相称、能够复核的证据确认业务行为。每项检查都要能说明：保护哪条规则、能发现什么错误、实际验证到哪一层。沿用当前任务的权限；修复任务完成实现与验证，只读审查不修改业务代码，保留他人改动和暂存状态。
 
-Authoring mode gates every new or changed test at
-write time. Audit mode runs focused sweeps of tests that re-assert source,
-duplicate stronger proof, couple behavior to implementation, or keep test-only
-production seams alive. Continue only within the authorized scope; optimize
-for confidence, not deletion count. Campaign mode prunes one
-whole subsystem's test surface (every test file a plugin or core area owns);
-before starting one, read [CAMPAIGN.md](CAMPAIGN.md).
+先判断是否需要新增测试。需要编写或修改测试时使用 Authoring gate；审查已有测试时使用 Audit 的价值与保留标准。只有用户明确要求清理整个子系统测试面时才读 [CAMPAIGN.md](CAMPAIGN.md)，不因一次验收启动清理。
+
+## 开始前：预期、边界与停止条件
+
+用几句话说明以下三项，然后继续已授权的工作，不为例行计划等待确认：
+
+- **行为与依据**：什么输入或事件应产生什么可观察结果，依据来自哪条用户要求或已确认合同。
+- **风险与边界**：可能错在哪一层，哪些依赖真实运行，哪些被替代。
+- **验证与停止**：最小充分的检查组合是什么，何时证据已足够。
+
+范围从当前需求、明确故障、本次改动及直接依赖开始。复用已有测试、夹具、隔离环境和工具；只有具体证据缺口才引入依赖，不强制安装 Testcontainers、属性测试框架或 Playwright MCP。纯文案、注释及无行为影响的小改动允许直接检查、局部预览或已有检查，允许零新增测试；保留项目必要的构建、契约和 CI 门禁。
+
+以明确要求和已确认业务合同确定预期，核对需求、日志、调用方、历史测试与当前实现。重要期待值不能取自被测生产函数或同一算法的复制品。预期不明时只能记录当前行为并注明“仅保护行为不变”；关键语义冲突无法自行解决时再追问，继续其他独立工作。
+
+## 选择验证边界
+
+| 风险所在 | 最小有效边界 |
+| --- | --- |
+| 计算、校验、状态转换 | 稳定函数、模块接口或事件入口的确定性测试。公共 API 不限于 HTTP；复杂内部算法可直接单测。 |
+| 数据库、缓存、队列、事务、跨服务序列化 | 真正经过相关依赖的隔离集成测试；存储与恢复问题不能由内存替身证明。 |
+| 重复、乱序、取消、重连 | 用受控事件、时钟或调度重现；串行重放不能代替真实并发语义验证。 |
+| 页面关键流程 | 核对用户实际得到的页面结果，保留可重复步骤与断言。 |
+| 真实模型选择、原生设备、音频与硬件 | 取得相应模型或设备证据；缺条件时完成可执行部分并标明缺口。 |
+
+关键交互保留真实实现。可以替代昂贵外部服务、时钟、超时或难触发错误，但说明替代内容；不能把目标缺陷所在组件模拟成成功，也不绑定私有拆分或无关调用顺序。
+
+断言业务状态与输出、正确的对象和身份、持久化与权限效果、必要副作用及禁止行为。非空、无异常、HTTP 202、工具被调用或日志成功只证明各自事实。仅当次数或顺序是合同的一部分时才断言交互细节，例如禁止重复扣款、确认后才能执行。
+
+等待明确状态或事件并设置合理超时；不固定长等待、不重复直到变绿。隔离数据与身份，保留随机失败输入或种子。测试断言保持简单，不用条件分支跳过核心断言，不吞异常、不写永真断言。测试失败先核对独立业务预期，只有证据证明测试过时或错误才修改并说明依据；不得为通过而删断言、放宽容差或无依据跳过。
 
 ## Authoring gate
 
@@ -40,32 +60,15 @@ that breaks under behavior-preserving refactoring is suspect, not automatically
 invalid: public names, bytes, packaging and architecture may be the contract.
 Otherwise move assertions to observable behavior at the owning boundary.
 
-For reproducible bugs, observe the regression failing for the intended reason
-on the pre-fix code in isolation and passing after repair. If the old failure
-cannot be run, name the missing evidence; a passing test alone does not prove
-the original bug was reproduced. Add cases for distinct risks, not duplicate
-replays of the same contract at every layer.
+## 修复前后对照
 
-## 按风险选择验证方法
+优先在改实现前通过真实处理入口建立最小回归：同一测试在旧实现上因目标业务错误失败，修复后通过。再补充或复用直接受影响的合法行为，防止靠屏蔽所有结果消除错误。缺依赖、导入失败、服务未启动或测试自身出错都不算复现。
 
-只在现有验证有关键缺口时选用以下方法，不为术语齐全引入新框架。每种方法仍须通过上面的新增测试门槛；优先复用现有测试工具和真实边界。
+代码已改好时，在安全的隔离副本中对照修复前后，保护用户未提交修改；无法核对时明确写“未验证修复前失败”。偶发问题优先利用已捕获轨迹、受控时钟、事件顺序或并发屏障；有限次未复现只说明这些运行中未观察到问题。
 
-| 场景 | 方法与证据边界 |
-| --- | --- |
-| 不熟悉的旧实现将被替换 | 表征测试记录真实输入、输出、错误和副作用；已知错误单独标记，不能把现状固化为正确业务规则。 |
-| 新旧实现迁移或多套逻辑合并 | 差分测试使用相同输入、初始状态和受控事件序列。只归一化合同允许变化的字段；每个差异都须解释为预期修复或回归。新旧一致仍可能共同出错，补独立业务断言。 |
-| 权限、数据规则或复杂状态转换 | 属性测试从独立业务规则提出始终成立的性质，例如未经授权不能跨用户写入、重复请求不重复产生副作用。覆盖合法与非法输入、事件顺序和边界；保留随机种子并缩减失败样例，不能由实现反推性质。 |
-| 模块或服务接口发生变化 | 契约测试验证真实生产方和消费方的输入、输出、错误语义及适用版本。消费方的自制 mock 不能单独证明生产方兼容；合同有主责任方，其他层仅补独立风险。 |
-| 怀疑测试能通过却发现不了错误 | 小范围变异测试：在隔离副本中故意改变关键判断或副作用，观察测试是否因目标行为失败。存活变异先区分等价变化、未执行路径与断言缺口；不追求统一变异分数。 |
-| 可靠性依赖故障或时序保障 | 故障注入实际触发相关超时、断连、重复或迟到事件，再检查资源和业务副作用；正常路径通过不能证明故障保障有效。 |
+## 按需读取专项验收
 
-以上方法的副作用都须隔离，不向生产或共享工作区注入错误，不为对照重复真实扣费、发送或写入。状态与异步行为要验证完成后的状态及副作用，不能只检查返回值。有限样本、差分一致或高变异分数都不等于完全正确；报告实际覆盖及未验证边界。
-
-### 受控故障与恢复验证
-
-混沌工程只用于有明确恢复假设的场景，不随机制造故障：指定注入位置、故障或事件顺序、影响范围、观察指标、停止条件和清理办法。先用隔离测试、重放或已有工具，覆盖相关断连重连、重复乱序、下游超时、队列饱和或部分提交，验证最终业务状态、资源回收及副作用次数，而非只看异常被捕获。
-
-真实服务、共享资源和流量上的注入或压测须有适用授权；测试授权不自动包含这些操作。停止注入后确认环境恢复，保留能解释失败的种子和事件记录。未执行恢复检查就报告未验证，不由一次恢复宣称系统能承受所有故障。
+异步任务、语音、模型或设备验收，以及现有证据确有缺口而需要变异、属性、差分、契约或故障恢复验证时，读取 [专项行为验收](references/behavior-acceptance.md) 的对应部分。确定性回归已经充分时，不追加同义的高级测试；不向生产或共享工作区注入错误，不为对照重复真实扣费、发送或写入。
 
 ## CI 稳定性与运行成本
 
@@ -196,7 +199,14 @@ refresh its actual base branch and changed files before the next batch.
 
 ## Handoff
 
-Report the actual change or review outcome, protected behavior, evidence and
-remaining limits. Include removed low-value categories, retained candidates,
-production simplifications and delivery state when applicable; authoring one
-test does not require a cleanup report, LOC comparison or PR template.
+默认运行目标案例与直接受影响的相关检查。扩大范围前说明要解决的具体风险；公共协议、基础设施或广泛共享逻辑变更可以合理扩大。适用的原缺陷、合法行为、关键边界和必需门禁已有充分证据就停止，不为数量或指标继续加测。清理只处理范围内已证明无效、完全重复或错误耦合的测试，先确认没有删除独立业务保护。
+
+最终简洁报告以下事实，小任务可合并成几句话：
+
+1. **结果**：已修复或验证的行为、尚未完成的部分。
+2. **关键证据**：业务规则、实际入口、预期与实际结果，以及运行命令或可定位记录。
+3. **修复前后**：原缺陷是否被捕获、修复后是否通过；无法核对就直说。
+4. **验证边界**：真实依赖、替身、真实模型、Web、模拟器和真机分别验证到哪里；不适用项省略。
+5. **停止依据**：为什么证据充分，或缺什么证据及最小下一步。
+
+仅报告实际执行的检查，区分通过、失败、跳过、未执行和建议。清理任务另补删除类别、保留依据、生产简化与交付状态；单次验收不要求清理报告、行数对比或 PR 模板。
