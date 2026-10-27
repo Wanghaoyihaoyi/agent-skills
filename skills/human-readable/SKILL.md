@@ -1,6 +1,6 @@
 ---
 name: human-readable
-description: Optimize AI-generated language for human comprehension while preserving facts and intent. Use only for complex/long-form replies, technical reports, summaries, or voice output needing rewrite; not for short confirmations, status sync, code formatting or machine-consumed output. Do not auto-load every turn; prefer inline conclusion-first rules.
+description: Optimize AI-generated language for human comprehension while preserving facts and intent. Use when drafting or revising conversational replies, technical reports, summaries, explanations, or voice output; not for code formatting or machine-consumed output.
 ---
 
 # Human Readable
