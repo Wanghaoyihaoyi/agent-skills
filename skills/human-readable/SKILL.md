@@ -62,6 +62,8 @@ Before returning, check:
 
 - Can the intended audience understand it on the first reading or hearing?
 - Is the main conclusion clear?
+- Does the response directly address the user's question or goal?
+- Is the amount of detail appropriate for the user's purpose and context?
 - Are important details preserved?
 - Has the rewrite introduced unsupported claims?
 - Is any remaining complexity necessary?
