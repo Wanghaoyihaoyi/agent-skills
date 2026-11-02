@@ -13,7 +13,7 @@
 | 开发与审查 | [hunt](skills/hunt/SKILL.md) | 先查清故障根因，再修复并验证 |
 | 开发与审查 | [code-review](skills/code-review/SKILL.md) | 审查改动、分支或 PR 的缺陷，逐项核实后报告 |
 | 开发与审查 | [adversarial-review](skills/adversarial-review/SKILL.md) | 通过另一家模型的命令行工具进行交叉审查 |
-| 开发与审查 | [patch-audit](skills/patch-audit/SKILL.md) | 提交前检查改动是否必要，清理冗余和场景补丁 |
+| 开发与审查 | [patch-audit](skills/patch-audit/SKILL.md) | 按需复审本轮新增机制、补丁链与结构退化，判断复杂度是否必要 |
 | 开发与审查 | [test-audit](skills/test-audit/SKILL.md) | 有效测试与行为验收，按风险补证据并审查低价值测试 |
 | 开发与审查 | [prune](skills/prune/SKILL.md) | 删除过时流程、冗余状态和无价值中间层 |
 | 交付与维护 | [kaneo-workflow](skills/kaneo-workflow/SKILL.md) | 开工检查待办，同步接手、交付和用户验收状态，补记独立工作 |
@@ -76,7 +76,7 @@ $hunt 扫描近期 CI 偶发失败，修复根因明确的简单问题并验证�
 $health 从近期会话找一条误导代理的 AGENTS.md 规则，在隔离环境重放同一任务，只改变这一条，比较质量与成本。
 ```
 
-技能中的示例命令按实际系统、工具和项目规则调整。技能不会自动授予提交、推送、发布、访问生产或删除数据的权限。`patch-audit` 的提交前要求是代理指令，不是 Git hook。
+技能中的示例命令按实际系统、工具和项目规则调整。技能不会自动授予提交、推送、发布、访问生产或删除数据的权限。`patch-audit` 按其条件在交付前由代理选用，不是 Git hook，也不要求每次提交都执行。
 
 ## 工作流分工
 
@@ -93,7 +93,7 @@ $health 从近期会话找一条误导代理的 AGENTS.md 规则，在隔离环�
 | 复审本轮复杂度 / 清理已有架构 | `patch-audit` / `prune` | 前者针对本轮改动，后者针对明确架构范围；复用同等检查证据 |
 | 编写或审查测试、修复回归与行为验收 / 交付收尾 | `test-audit` / `check` | 先明确独立预期与证据层级，达到停止条件就交付；不自动开启全仓清理或发布 |
 
-`think` 是设计能力，`goal-prompt` 是完整任务入口，不需要先手动运行一个再复制到另一个。用户已要求实施时不重新索取“开干”；仅方案讨论等待必要实施授权。提交前 `patch-audit` 的要求保留，但同一份已审查内容不重复运行。
+`think` 是设计能力，`goal-prompt` 是完整任务入口，不需要先手动运行一个再复制到另一个。用户已要求实施时不重新索取“开干”；仅方案讨论等待必要实施授权。`patch-audit` 仅在用户要求该类复审或代码简化，或符合其[自动触发条件](skills/patch-audit/SKILL.md#自动触发与结论复用)时执行；普通局部实现和行数增长本身不触发，已审内容不因拆分提交或 amend 说明重复运行。
 
 本仓库 `skills/code-review/` 是个人维护的通用入口，包含 Waza 的审查资料和脚本；Claude Code 官方插件也有名为 `code-review` 的 PR 命令，其固定多代理、评分与发布流程独立。使用时确认实际加载的文件；不要把同名等同于同一套规则，也不顺带改写平台维护的插件。
 

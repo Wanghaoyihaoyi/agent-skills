@@ -14,7 +14,7 @@ description: 检查发布准备度，并完成已授权的提交、推送、发�
 ## 按意图选择
 
 - 普通 diff、分支或 PR 查错：转到 `code-review`，保持用户指定范围与只读要求。
-- 检查新增复杂度是否必要：`patch-audit`；清理已有架构：`prune`。不因发布检查默认把这些流程全部再跑一遍。
+- 检查新增复杂度是否必要：仅在用户要求该类复审或符合其[自动触发条件](../patch-audit/SKILL.md#自动触发与结论复用)时使用 `patch-audit`；清理已有架构：`prune`。不因提交或发布检查默认把这些流程全部再跑一遍，复用已有结论。
 - 是否值得发版、提交、推送或发布：[发布与交付](references/mode-ship.md)。
 - 批量梳理 issue/PR：[队列维护](references/mode-triage.md)。仅审一个 PR 的代码仍用 `code-review`。
 - CLI、插件、安装包或反复修订的候选版本：[产物与发布面](references/release-surfaces.md)。
