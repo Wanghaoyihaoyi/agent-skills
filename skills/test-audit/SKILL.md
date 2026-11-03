@@ -13,7 +13,7 @@ description: "有效测试与行为验收。用于编写、修改、审查或清
 
 ## 开始前：预期、边界与停止条件
 
-用几句话说明以下三项，然后继续已授权的工作，不为例行计划等待确认：
+按风险确定以下三项；复杂验收简短说明，小改可直接体现在检查与结果中，不另设计划关卡：
 
 - **行为与依据**：什么输入或事件应产生什么可观察结果，依据来自哪条用户要求或已确认合同。
 - **风险与边界**：可能错在哪一层，哪些依赖真实运行，哪些被替代。
@@ -41,18 +41,18 @@ description: "有效测试与行为验收。用于编写、修改、审查或清
 
 ## Authoring gate
 
-Before adding any test, answer four questions; a missing answer means do not
-add it yet:
+Choose tests using these criteria; do not require a separate questionnaire:
 
 1. What observable behavior, invariant, or independent contract does it protect?
 2. What credible regression makes it fail?
 3. Why does existing coverage not already catch that failure? Each contract has
    one primary test owner at the strongest boundary; another layer needs its
    own distinct risk, such as a transport or lifecycle failure the owner cannot
-   reach. Prefer extending a table-driven case or shared fixture over a
-   near-duplicate test; consolidate duplicated setup in the same change.
+   reach. Prefer extending a table-driven case or shared fixture when clearer; do not
+   turn a small regression into unrelated fixture cleanup.
 4. Does it need a production seam (export, flag, wrapper, injection hook) that no
-   production caller needs? If yes, move the test to the real boundary instead.
+   production caller needs? Prefer the real boundary; retain a narrow seam when it is necessary to
+   control a credible failure and its cost is justified.
 
 Use the relevant [junk patterns](#junk-patterns) to challenge the test; keep it
 when the [retention bar](#retention-bar) names an independent contract. A test
