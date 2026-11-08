@@ -2,7 +2,7 @@
 
 本仓库是个人维护的技能集合，其中包含原创内容、改编内容和受公开资料启发的内容。下表依据技能中已有的来源说明及与上游文件的对照整理，不把改编内容重新声明为独立原创。
 
-本仓库的 MIT 许可证适用于原创内容与新增改动。上游内容保留原有版权和适用许可证；下列文本在 2026-10-12 从来源仓库取得。未打包上游项目的完整代码或技能集合。
+本仓库的 MIT 许可证适用于原创内容与新增改动。上游内容保留原有版权和适用许可证；上游版本与核对日期在对应条目注明。未打包上游项目的完整代码或技能集合。
 
 | 本仓库位置 | 来源 | 关系与声明 |
 | --- | --- | --- |
@@ -15,6 +15,10 @@
 | `skills/write/` | [Tw93 / Waza · write](https://github.com/tw93/Waza/tree/main/skills/write) | 中英文写作说明、参考资料和检查脚本的改编与复用 |
 | `skills/learn/` | [Tw93 / Waza · learn](https://github.com/tw93/Waza/tree/main/skills/learn) | 参考上游研究工作流，重新编写本地研究入口 |
 | `skills/ui/` | [Tw93 / Waza · ui](https://github.com/tw93/Waza/tree/main/skills/ui) | 界面工作流和设计参考资料的改编；保留其他设计来源 |
+| `skills/ui/references/design-b-end.md` | [Ludi / b-end-design-system-skill（`f56256e`）](https://github.com/Ludi-Herry/b-end-design-system-skill/tree/f56256e0a7432bd2d60d317eb33048f2c09df296) | 业务页面骨架、组件选型、浮层与验收方法的改编；[MIT 许可证](skills/ui/LICENSE-LUDI) |
+| `skills/ui/references/design-mobile.md` | [Ludi / mobile-design-system-skill（`093c88e`）](https://github.com/Ludi-Herry/mobile-design-system-skill/tree/093c88e90265e2b43efbca88c00800321abb2461) | 触控、安全区、导航、输入、浮层和信息流规范的改编；[MIT 许可证](skills/ui/LICENSE-LUDI) |
+| `skills/ui/references/design-desktop-agent.md` | [Ludi-Herry / desktop-agent-ui（`5ee4fea`）](https://github.com/Ludi-Herry/desktop-agent-ui/tree/5ee4fea59c279965e1a6b4b967d23d302a583dcc) | 桌面运行时、Agent 控制权、窗口、输入和滚动工程规范的改编；[MIT 许可证](skills/ui/LICENSE-DESKTOP-AGENT-UI) |
+| `skills/ui/references/visual-refinement.md` | [Damir Sokolovsky / unslop](https://github.com/heydamir/unslop) | 选择性改编视觉层级、细节打磨与分轮验证方法，结合本地跨平台约束重写；上游采用 [CC BY 4.0](https://github.com/heydamir/unslop/blob/main/LICENSE) |
 | `skills/adversarial-review/` | [poteto/noodle](https://github.com/poteto/noodle) | 原说明标注为改编；保留 [MIT 许可证](licenses/poteto-noodle-LICENSE.txt) |
 | 已移除的 `how` 技能（历史归属） | [poteto/how](https://github.com/poteto/how) | 原说明标注为改编；保留 [MIT 许可证](licenses/poteto-how-LICENSE.txt) |
 | `skills/read/scripts/fetch.sh`、`fetch_feishu.py`、`fetch_weixin.py` | [joeseesun/qiaomu-markdown-proxy](https://github.com/joeseesun/qiaomu-markdown-proxy) | 原脚本标注为受其实现思路启发；保留致谢及 [MIT 许可证](licenses/joeseesun-qiaomu-markdown-proxy-LICENSE.txt) |

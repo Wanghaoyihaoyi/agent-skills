@@ -4,11 +4,11 @@ Load this only when the surface is a dashboard, analytics view, chart-heavy inte
 
 ## Dashboard defaults
 
-Dashboards are utility surfaces: orient the user, show status, enable action. No hero sections, no marketing copy. Every element must earn its place by answering a question the user has.
+Start with the business question, a few core metrics and the next action. Keep time periods, units and comparison baselines consistent across related metrics.
 
 - Primary layout: status summary at top, detail below; or sidebar filters + main chart area. The main question must be answerable without expansion; disclose supplementary records, not the answer itself. Check sparse and typical data without padding gaps with filler.
 - Whitespace: tighter than marketing pages; users scan, not read. Use generous column spacing, not generous row height.
-- Number density: many numbers on screen at once is not a problem. Crowding without alignment is. Use `font-variant-numeric: tabular-nums` for all numeric columns. Right-align numbers. Left-align labels.
+- Keep related values easy to scan. For B 端 filtering, bulk actions and table layout, see [B 端设计系统](design-b-end.md).
 
 ## Chart selection
 
@@ -16,18 +16,17 @@ Dashboards are utility surfaces: orient the user, show status, enable action. No
 |---|---|
 | Comparing values across categories | Bar chart (horizontal if labels are long) |
 | Trend over time | Line chart; avoid bars for time series with many points |
-| Part-whole relationships | Treemap (6+ segments) or stacked bar; pie only for 2-4 segments |
+| Part-to-whole relationships | Stacked bar or treemap. A pie can work for a few nonnegative, mutually exclusive categories that add up to the whole. |
 | Distribution | Histogram or box plot; never pie chart |
 | Correlation | Scatter plot; do not use line chart |
 
-Pie charts with more than 4 segments communicate nothing. Use a treemap or ranked list instead.
+Label units and comparison periods. Use a bar chart or ranked list when readers need to compare close values precisely. Represent missing values explicitly.
 
 ## Number-dense interfaces
 
 - `font-variant-numeric: tabular-nums` on every number column so digits align vertically.
-- Right-align all numbers; left-align all text labels. Mixed alignment in the same column is always wrong.
-- Subtle row separators: `1px` line at `rgba(0,0,0,0.06)` (light) or `rgba(255,255,255,0.05)` (dark). Alternating row backgrounds only if the table is very wide (12+ columns).
-- Column spacing: at least `16px` between adjacent columns; more between logically distinct groups.
+- Right-align comparable values, left-align labels, and center fixed-width icon or selection columns.
+- Use the project’s subtle divider and spacing tokens. Separate groups with spacing, and use a light row separator or alternating surfaces if readers lose their place.
 
 ## Using a product as a benchmark
 
