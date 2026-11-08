@@ -1,6 +1,6 @@
 ---
 name: human-readable
-description: Optimize AI-generated language for human comprehension while preserving facts and intent. Use when drafting or revising conversational replies, technical reports, summaries, explanations, or voice output; not for code formatting or machine-consumed output.
+description: Use for long replies, technical reports, or debug reports, including final handoffs after using other skills. Make the output easier to follow while preserving facts and uncertainty. Skip ordinary short replies.
 ---
 
 # Human Readable
